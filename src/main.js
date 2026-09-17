@@ -1,6 +1,7 @@
 import './styles.css';
 import './motion.css';
 import { invoke } from '@tauri-apps/api/core';
+import { getVersion } from '@tauri-apps/api/app';
 import { getCurrentWebview } from '@tauri-apps/api/webview';
 import { open, save, confirm } from '@tauri-apps/plugin-dialog';
 import { openUrl } from '@tauri-apps/plugin-opener';
@@ -63,7 +64,8 @@ const state = {
   imageFitMode:'fit',
   pageThumbnails:{},
   thumbnailBusy:false,
-  busy:false
+  busy:false,
+  appVersion:''
 };
 
 const t = (it, en) => state.settings.language === 'en' ? en : it;
@@ -143,7 +145,7 @@ function renderHome(motion) {
     ['unlock',icons.unlock,'Unlock PDF',t('Rimuovi la protezione quando conosci la password.','Remove protection when you know the password.')],
     ['images',icons.image,t('PDF ↔ Immagini','PDF ↔ Images'),t('Esporta pagine in immagini o crea PDF da raccolte di immagini.','Export pages as images or create PDFs from image collections.')]
   ];
-  shell(`${header('_davPDF · v1.0.0',t('PDF toolbox locale','Local PDF toolbox'))}<section class="pdf-hero panel"><div class="pdf-hero-mark">${icons.file}</div><div><h2>${t('Tutto il necessario, senza caricare documenti online.','Everything you need, without uploading documents online.')}</h2><p>${t('Gli originali restano intatti: ogni operazione genera un nuovo PDF e scrive prima su un file temporaneo.','Originals stay untouched: every operation creates a new PDF and writes to a temporary file first.')}</p></div></section><section class="tool-grid">${tools.map(([page,icon,title,copy])=>`<button class="panel tool-card" data-tool="${page}"><span class="tool-icon">${icon}</span><strong>${title}</strong><small>${copy}</small><span class="tool-arrow">→</span></button>`).join('')}</section><section class="trust-row"><div><strong>${t('Elaborazione locale','Local processing')}</strong><span>${t('Nessun upload e nessuna telemetria.','No uploads and no telemetry.')}</span></div><div><strong>${t('Originali protetti','Originals protected')}</strong><span>${t('Gli output vengono sempre creati come nuovi file.','Outputs are always created as new files.')}</span></div><div><strong>${t('Multipiattaforma','Cross-platform')}</strong><span>Windows · macOS · Linux</span></div></section>`,motion);
+  shell(`${header(`_davPDF${state.appVersion ? ` · v${escapeHtml(state.appVersion)}` : ''}`,t('PDF toolbox locale','Local PDF toolbox'))}<section class="pdf-hero panel"><div class="pdf-hero-mark">${icons.file}</div><div><h2>${t('Tutto il necessario, senza caricare documenti online.','Everything you need, without uploading documents online.')}</h2><p>${t('Gli originali restano intatti: ogni operazione genera un nuovo PDF e scrive prima su un file temporaneo.','Originals stay untouched: every operation creates a new PDF and writes to a temporary file first.')}</p></div></section><section class="tool-grid">${tools.map(([page,icon,title,copy])=>`<button class="panel tool-card" data-tool="${page}"><span class="tool-icon">${icon}</span><strong>${title}</strong><small>${copy}</small><span class="tool-arrow">→</span></button>`).join('')}</section><section class="trust-row"><div><strong>${t('Elaborazione locale','Local processing')}</strong><span>${t('Nessun upload e nessuna telemetria.','No uploads and no telemetry.')}</span></div><div><strong>${t('Originali protetti','Originals protected')}</strong><span>${t('Gli output vengono sempre creati come nuovi file.','Outputs are always created as new files.')}</span></div><div><strong>${t('Multipiattaforma','Cross-platform')}</strong><span>Windows · macOS · Linux</span></div></section>`,motion);
   document.querySelectorAll('[data-tool]').forEach((node)=>node.addEventListener('click',()=>{state.page=node.dataset.tool;render('page');}));
 }
 
@@ -307,7 +309,7 @@ function activityTitle(item) {
 }
 
 function renderSettings(motion) {
-  shell(`${header('_davPDF',t('Impostazioni','Settings'))}<section class="settings-grid"><div class="panel settings-card"><h2>${t('Aspetto','Appearance')}</h2><div class="setting-control"><span class="setting-control-label">${t('Tema','Theme')}</span>${davSelect('theme',state.settings.theme,[['system',t('Sistema','System')],['light',t('Chiaro','Light')],['dark',t('Scuro','Dark')]])}</div><div class="setting-control"><span class="setting-control-label">${t('Lingua','Language')}</span>${davSelect('language',state.settings.language,[['it','Italiano'],['en','English']])}</div></div><div class="panel about-card"><div class="brand big"><span>_dav</span>PDF</div><p>${t('Toolbox PDF locale e multipiattaforma. Nessun account, nessuna pubblicità e nessun upload dei tuoi documenti.','Local cross-platform PDF toolbox. No account, no ads, and no document uploads.')}</p><div class="about-links"><button class="website-button" data-action="website">${icons.globe}<span>davstudios.it</span></button><button class="coffee-button wide" data-action="coffee">${icons.coffee}<span>${t('Comprami Un Caffè','Buy Me A Coffee')}</span></button></div><div class="version">v1.0.0 · ${t('Release stabile','Stable release')}</div></div><div class="panel feature-status-card"><h2>${t('Stato funzionalità','Feature status')}</h2><div><strong>${t('Disponibile in v1.0.0','Available in v1.0.0')}</strong><span>Merge · Split · Page Manager · Compress · Metadata · Protect · Unlock · PDF → Images · Images → PDF · Page thumbnails</span></div><div><strong>${t('Motore rendering','Rendering engine')}</strong><span>PDFium · ${t('elaborazione completamente locale','fully local processing')}</span></div></div></section>`,motion);
+  shell(`${header('_davPDF',t('Impostazioni','Settings'))}<section class="settings-grid"><div class="panel settings-card"><h2>${t('Aspetto','Appearance')}</h2><div class="setting-control"><span class="setting-control-label">${t('Tema','Theme')}</span>${davSelect('theme',state.settings.theme,[['system',t('Sistema','System')],['light',t('Chiaro','Light')],['dark',t('Scuro','Dark')]])}</div><div class="setting-control"><span class="setting-control-label">${t('Lingua','Language')}</span>${davSelect('language',state.settings.language,[['it','Italiano'],['en','English']])}</div></div><div class="panel about-card"><div class="brand big"><span>_dav</span>PDF</div><p>${t('Toolbox PDF locale e multipiattaforma. Nessun account, nessuna pubblicità e nessun upload dei tuoi documenti.','Local cross-platform PDF toolbox. No account, no ads, and no document uploads.')}</p><div class="about-links"><button class="website-button" data-action="website">${icons.globe}<span>davstudios.it</span></button><button class="coffee-button wide" data-action="coffee">${icons.coffee}<span>${t('Comprami Un Caffè','Buy Me A Coffee')}</span></button></div><div class="version">${state.appVersion ? `v${escapeHtml(state.appVersion)} · ` : ''}${t('Release stabile','Stable release')}</div></div><div class="panel feature-status-card"><h2>${t('Stato funzionalità','Feature status')}</h2><div><strong>${t('Disponibile','Available')}</strong><span>Merge · Split · Page Manager · Compress · Metadata · Protect · Unlock · PDF → Images · Images → PDF · Page thumbnails</span></div><div><strong>${t('Motore rendering','Rendering engine')}</strong><span>PDFium · ${t('elaborazione completamente locale','fully local processing')}</span></div></div></section>`,motion);
   bindSettings();
 }
 
@@ -472,4 +474,14 @@ if (isTauri) {
 }
 
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{if(state.settings.theme==='system'){applyTheme();render();}});
-render('startup');
+
+async function initializeApp() {
+  try {
+    state.appVersion = await getVersion();
+  } catch {
+    state.appVersion = '';
+  }
+  render('startup');
+}
+
+initializeApp();

@@ -1,4 +1,4 @@
-# _davPDF v1.0.0 build notes
+# _davPDF v1.0.2 build notes
 
 ## Requirements
 

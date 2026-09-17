@@ -1,4 +1,4 @@
-_davPDF v1.0.0
+_davPDF v1.0.2
 Tests: 12
 Passed: 12
 Failed: 0
