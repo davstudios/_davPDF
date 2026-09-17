@@ -43,8 +43,8 @@
     "macOS": {
       "signingIdentity": "-"
     },
-    "resources": [
-      "resources/pdfium/"
-    ]
+    "resources": {
+      "resources/pdfium/": "pdfium/"
+    }
   }
 }
