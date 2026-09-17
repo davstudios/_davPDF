@@ -1,0 +1,117 @@
+:root{
+  --motion-reveal-distance:1.15rem;
+  --motion-reveal-duration:680ms;
+  --motion-reveal-step:72ms;
+  --motion-page-out:180ms;
+  --motion-page-in:420ms;
+  --motion-ease-out:cubic-bezier(.16,1,.3,1);
+  --motion-ease-in:cubic-bezier(.4,0,1,1)
+}
+.shell[data-motion-mode="startup"] .brand,
+.shell[data-motion-mode="startup"] .nav-item,
+.shell[data-motion-mode="startup"] .sidebar-bottom,
+.shell[data-motion-mode="startup"] .main>.topbar,
+.shell[data-motion-mode="startup"] .main>.workspace,
+.shell[data-motion-mode="startup"] .main>.history-page,
+.shell[data-motion-mode="startup"] .main>.settings-grid{
+  animation:dav-load-in var(--motion-reveal-duration) var(--motion-ease-out) both
+}
+.shell[data-motion-mode="startup"] .brand{animation-delay:0ms}
+.shell[data-motion-mode="startup"] .nav-item:nth-child(1){animation-delay:72ms}
+.shell[data-motion-mode="startup"] .nav-item:nth-child(2){animation-delay:144ms}
+.shell[data-motion-mode="startup"] .nav-item:nth-child(3){animation-delay:216ms}
+.shell[data-motion-mode="startup"] .sidebar-bottom{animation-delay:288ms}
+.shell[data-motion-mode="startup"] .main>.topbar{animation-delay:72ms}
+.shell[data-motion-mode="startup"] .main>.workspace,
+.shell[data-motion-mode="startup"] .main>.history-page,
+.shell[data-motion-mode="startup"] .main>.settings-grid{animation-delay:144ms}
+.shell[data-motion-mode="page"] .main>.topbar,
+.shell[data-motion-mode="page"] .main>.workspace,
+.shell[data-motion-mode="page"] .main>.history-page,
+.shell[data-motion-mode="page"] .main>.settings-grid{
+  animation:dav-page-in var(--motion-page-in) var(--motion-ease-out) both
+}
+.shell[data-motion-mode="page"] .main>.workspace,
+.shell[data-motion-mode="page"] .main>.history-page,
+.shell[data-motion-mode="page"] .main>.settings-grid{animation-delay:58ms}
+.shell[data-motion-mode="content"] .workspace-grid>.panel,
+.shell[data-motion-mode="content"] .empty-wrap>.drop-zone,
+.shell[data-motion-mode="content"] .empty-wrap>.trust-row{
+  animation:dav-load-in 520ms var(--motion-ease-out) both
+}
+.shell[data-motion-mode="content"] .workspace-grid>.panel:nth-child(2),
+.shell[data-motion-mode="content"] .empty-wrap>.trust-row{animation-delay:72ms}
+.shell[data-motion-mode="content"] .trust-row>div{
+  animation:dav-soft-in 520ms var(--motion-ease-out) both
+}
+.shell[data-motion-mode="content"] .trust-row>div:nth-child(1){animation-delay:144ms}
+.shell[data-motion-mode="content"] .trust-row>div:nth-child(2){animation-delay:216ms}
+.shell[data-motion-mode="content"] .trust-row>div:nth-child(3){animation-delay:288ms}
+.shell[data-motion-mode="rules"] .rule-card{
+  animation:dav-rule-settle 360ms var(--motion-ease-out) both;
+  animation-delay:var(--reveal-delay,0ms)
+}
+.rule-picker{transform-origin:top right;animation:dav-pop-in 220ms var(--motion-ease-out) both}
+.toast{animation:dav-toast-in 420ms var(--motion-ease-out) both}
+.toast.is-leaving{animation:dav-toast-out 180ms var(--motion-ease-in) both}
+.button,.icon-button,.nav-item,.rule-picker button,.text-button,.rule-card,.trust-row>div,.drop-zone,.setting-row,input,select{
+  transition-timing-function:var(--motion-ease-out)
+}
+.button:active:not(:disabled),.icon-button:active:not(:disabled),.nav-item:active,.rule-picker button:active{transform:scale(.975)}
+.drop-icon{transition:transform 420ms var(--motion-ease-out),background-color 260ms var(--motion-ease-out)}
+.drop-zone:hover .drop-icon{transform:translate3d(0,-3px,0) scale(1.025)}
+.drop-zone.drag-over .drop-icon{animation:dav-drop-pulse 900ms var(--motion-ease-out) infinite alternate}
+.rule-card:hover{transform:translate3d(0,-1px,0);border-color:color-mix(in srgb,var(--accent) 28%,var(--border))}
+.trust-row>div:hover{transform:translate3d(0,-2px,0);border-color:color-mix(in srgb,var(--accent) 24%,var(--border));box-shadow:0 12px 28px rgba(0,0,0,.05)}
+[data-theme="dark"] .trust-row>div:hover{box-shadow:0 12px 32px rgba(0,0,0,.18)}
+.status{transition:background-color 260ms var(--motion-ease-out),color 260ms var(--motion-ease-out),transform 260ms var(--motion-ease-out)}
+tr:hover .status{transform:translate3d(2px,0,0)}
+.switch span,.switch span:after{transition-duration:260ms;transition-timing-function:var(--motion-ease-out)}
+input:focus,select:focus{transition:border-color 220ms var(--motion-ease-out),box-shadow 220ms var(--motion-ease-out),background-color 220ms var(--motion-ease-out)}
+@keyframes dav-load-in{
+  from{opacity:0;transform:translate3d(0,var(--motion-reveal-distance),0)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-page-in{
+  from{opacity:0;transform:translate3d(0,.55rem,0)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-soft-in{
+  from{opacity:0;transform:translate3d(0,.7rem,0) scale(.99)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-rule-settle{
+  from{opacity:.45;transform:translate3d(0,.45rem,0) scale(.992)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-pop-in{
+  from{opacity:0;transform:translate3d(0,-6px,0) scale(.975)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-toast-in{
+  from{opacity:0;transform:translate3d(0,12px,0) scale(.985)}
+  to{opacity:1;transform:none}
+}
+@keyframes dav-toast-out{
+  from{opacity:1;transform:none}
+  to{opacity:0;transform:translate3d(0,6px,0) scale(.985)}
+}
+@keyframes dav-drop-pulse{
+  from{transform:translate3d(0,-2px,0) scale(1.02)}
+  to{transform:translate3d(0,-6px,0) scale(1.055)}
+}
+@media (prefers-reduced-motion:reduce){
+  .shell[data-motion-mode] .brand,
+  .shell[data-motion-mode] .nav-item,
+  .shell[data-motion-mode] .sidebar-bottom,
+  .shell[data-motion-mode] .main>* ,
+  .shell[data-motion-mode] .workspace-grid>.panel,
+  .shell[data-motion-mode] .empty-wrap>* ,
+  .shell[data-motion-mode] .trust-row>div,
+  .shell[data-motion-mode] .rule-card,
+  .rule-picker,.toast,.toast.is-leaving,.drop-zone.drag-over .drop-icon{animation:none!important}
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+:root[data-ui-transition="theme"]::view-transition-old(root){animation:dav-theme-out 180ms var(--motion-ease-in) both}:root[data-ui-transition="theme"]::view-transition-new(root){animation:dav-theme-in 420ms var(--motion-ease-out) both}:root[data-ui-transition="language"]::view-transition-old(root){animation:dav-language-out 180ms var(--motion-ease-in) both}:root[data-ui-transition="language"]::view-transition-new(root){animation:dav-language-in 420ms var(--motion-ease-out) both}:root[data-ui-transition="theme-out"] #app{animation:dav-theme-out 180ms var(--motion-ease-in) both}:root[data-ui-transition="theme-in"] #app{animation:dav-theme-in 420ms var(--motion-ease-out) both}:root[data-ui-transition="language-out"] #app{animation:dav-language-out 180ms var(--motion-ease-in) both}:root[data-ui-transition="language-in"] #app{animation:dav-language-in 420ms var(--motion-ease-out) both}@keyframes dav-theme-out{from{opacity:1;transform:none}to{opacity:0;transform:scale(.997)}}@keyframes dav-theme-in{from{opacity:0;transform:scale(1.003)}to{opacity:1;transform:none}}@keyframes dav-language-out{from{opacity:1;transform:none}to{opacity:0;transform:translate3d(0,-.3rem,0)}}@keyframes dav-language-in{from{opacity:0;transform:translate3d(0,.55rem,0)}to{opacity:1;transform:none}}
+.shell[data-motion-mode="content"] .result-stats>.panel,.shell[data-motion-mode="content"] .duplicate-workspace>.panel,.shell[data-motion-mode="content"] .duplicate-group,.shell[data-motion-mode="content"] .scan-stage{animation:dav-load-in 520ms var(--motion-ease-out) both}.shell[data-motion-mode="content"] .result-stats>.panel:nth-child(1){animation-delay:0ms}.shell[data-motion-mode="content"] .result-stats>.panel:nth-child(2){animation-delay:55ms}.shell[data-motion-mode="content"] .result-stats>.panel:nth-child(3){animation-delay:110ms}.shell[data-motion-mode="content"] .result-stats>.panel:nth-child(4){animation-delay:165ms}.duplicate-group.is-expanded .group-files{animation:dav-soft-in 300ms var(--motion-ease-out) both}.duplicate-file{transition:background-color 180ms var(--motion-ease-out),opacity 180ms var(--motion-ease-out)}
+.shell[data-motion-mode="startup"] .main>.pdf-hero,.shell[data-motion-mode="startup"] .main>.tool-grid,.shell[data-motion-mode="startup"] .main>.pdf-workspace,.shell[data-motion-mode="startup"] .main>.single-tool-grid,.shell[data-motion-mode="startup"] .main>.page-manager,.shell[data-motion-mode="startup"] .main>.conversion-grid,.shell[data-motion-mode="startup"] .main>.activity-page{animation:dav-load-in var(--motion-reveal-duration) var(--motion-ease-out) both}.shell[data-motion-mode="startup"] .main>.pdf-hero{animation-delay:120ms}.shell[data-motion-mode="startup"] .main>.tool-grid,.shell[data-motion-mode="startup"] .main>.pdf-workspace,.shell[data-motion-mode="startup"] .main>.single-tool-grid,.shell[data-motion-mode="startup"] .main>.page-manager,.shell[data-motion-mode="startup"] .main>.conversion-grid,.shell[data-motion-mode="startup"] .main>.activity-page{animation-delay:190ms}.shell[data-motion-mode="page"] .main>.pdf-hero,.shell[data-motion-mode="page"] .main>.tool-grid,.shell[data-motion-mode="page"] .main>.pdf-workspace,.shell[data-motion-mode="page"] .main>.single-tool-grid,.shell[data-motion-mode="page"] .main>.page-manager,.shell[data-motion-mode="page"] .main>.conversion-grid,.shell[data-motion-mode="page"] .main>.activity-page{animation:dav-page-in var(--motion-page-in) var(--motion-ease-out) both}.shell[data-motion-mode="content"] .pdf-row,.shell[data-motion-mode="content"] .page-card,.shell[data-motion-mode="content"] .compression-presets button{animation:dav-soft-in 420ms var(--motion-ease-out) both}.tool-card{animation:dav-soft-in 520ms var(--motion-ease-out) both}.tool-card:nth-child(2){animation-delay:50ms}.tool-card:nth-child(3){animation-delay:100ms}.tool-card:nth-child(4){animation-delay:150ms}.tool-card:nth-child(5){animation-delay:200ms}.tool-card:nth-child(6){animation-delay:250ms}.tool-card:nth-child(7){animation-delay:300ms}.tool-card:nth-child(8){animation-delay:350ms}

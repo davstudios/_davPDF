@@ -1,0 +1,27 @@
+[package]
+name = "davpdf"
+version = "1.0.0"
+description = "_davPDF desktop application"
+authors = ["_davstudios"]
+edition = "2021"
+rust-version = "1.88"
+
+[lib]
+name = "davpdf_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["image-ico"] }
+tauri-plugin-dialog = "2"
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+lopdf = "0.45"
+uuid = { version = "1", features = ["v4"] }
+pdfium-render = "0.9.4"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
+printpdf = { version = "0.12.8", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
+base64 = "0.22"

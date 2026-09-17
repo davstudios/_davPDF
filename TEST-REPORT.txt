@@ -1,0 +1,5 @@
+_davPDF v1.0.0
+Tests: 12
+Passed: 12
+Failed: 0
+Notes: PDF engine helpers and zero-comment source audit validated. PDFium runtime integration is prepared by platform scripts and release workflow.
