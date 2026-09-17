@@ -1,6 +1,6 @@
 [package]
 name = "davpdf"
-version = "1.0.0"
+version = "1.0.1"
 description = "_davPDF desktop application"
 authors = ["_davstudios"]
 edition = "2021"
