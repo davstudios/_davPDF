@@ -91,9 +91,35 @@ La funzione **Protect PDF** crea una nuova copia protetta da password. **Unlock 
 
 Le build di release vengono generate tramite GitHub Actions sui rispettivi sistemi operativi.
 
-## Installazione
+## Installazione delle release GitHub non firmate
 
-Per gli utenti finali, scarica il pacchetto adatto al tuo sistema dalla sezione **Releases** del repository e avvialo normalmente. Non è necessario installare Node.js, Rust o clonare il codice sorgente.
+Le release di `_davPDF` sono distribuite direttamente tramite GitHub e, al momento, non utilizzano certificati commerciali di code signing o notarizzazione Apple. Il codice sorgente è disponibile pubblicamente con licenza MIT.
+
+### Windows
+
+Windows SmartScreen può mostrare l'avviso **“Windows ha protetto il PC”** perché l'installer non è firmato con un certificato di publisher attendibile. Se hai scaricato il file dalla repository GitHub ufficiale di `_davstudios`, seleziona **Ulteriori informazioni** e poi **Esegui comunque**.
+
+### macOS
+
+Gatekeeper può impedire la prima apertura perché l'app non è firmata con Developer ID e non è notarizzata da Apple. Dopo aver tentato di aprire l'app, vai in **Impostazioni di Sistema → Privacy e Sicurezza**, individua il messaggio relativo a `_davPDF` e scegli **Apri comunque**.
+
+### Linux
+
+Per un'AppImage può essere necessario rendere il file eseguibile prima dell'avvio:
+
+```bash
+chmod +x _davPDF*.AppImage
+```
+
+Scarica sempre le release dalla repository GitHub ufficiale di `_davstudios`. Quando viene pubblicato un hash SHA-256, puoi usarlo per verificare l'integrità del file scaricato.
+
+## Informazioni pacchetto
+
+- Developer / Publisher: `_davstudios`
+- Homepage: https://davstudios.it
+- Licenza: MIT
+- Bundle identifier: `studio.dav.pdf`
+- Versione corrente: `26.10.1`
 
 ## Sviluppo locale
 
@@ -102,9 +128,9 @@ Requisiti: Node.js, Rust 1.88 o superiore e i prerequisiti Tauri del sistema ope
 ```bash
 npm install
 npm run desktop
+```
 
 La modalità sviluppo usa la porta locale dedicata `17333` e ripulisce automaticamente eventuali sessioni `_davPDF` rimaste aperte su Windows.
-```
 
 Test:
 
@@ -123,6 +149,10 @@ Gli artefatti vengono creati in `src-tauri/target/release/bundle/`.
 ## Tecnologia
 
 _davPDF usa **Tauri 2** per l'app desktop, **Rust + lopdf** per la manipolazione PDF, **PDFium** per il rendering, **printpdf** per la creazione di PDF da immagini e **JavaScript + Vite** per l'interfaccia. Il design e il motion system seguono la stessa identità visiva di `_davRENAME`, `_davIMAGE` e `_davDUPLICATE`.
+
+## Note della release
+
+La v26.10.1 adotta il nuovo standard di versioning e packaging `_davstudios` senza modificare il motore PDF, il rendering PDFium, l'interfaccia o la logica funzionale dell'app. La v1.0.0 rimane la prima release stabile di `_davPDF`.
 
 ## Licenza
 
@@ -217,9 +247,35 @@ _davPDF does not show invented reduction percentages before processing. A PDF th
 
 Release builds are generated through GitHub Actions on the corresponding operating systems.
 
-## Installation
+## Installing unsigned GitHub releases
 
-For end users, download the package for your operating system from the repository's **Releases** section and launch it normally. Node.js, Rust, and the source repository are not required to use a compiled release.
+`_davPDF` releases are distributed directly through GitHub and currently do not use a commercial Windows code-signing certificate or Apple Developer ID notarization. The source code is publicly available under the MIT License.
+
+### Windows
+
+Windows SmartScreen may display **“Windows protected your PC”** because the installer is not signed by a trusted publisher certificate. If you downloaded the file from the official `_davstudios` GitHub repository, choose **More info** and then **Run anyway**.
+
+### macOS
+
+Gatekeeper may block the first launch because the app is not signed with Developer ID and notarized by Apple. After attempting to open the app, go to **System Settings → Privacy & Security**, find the `_davPDF` message and choose **Open Anyway**.
+
+### Linux
+
+An AppImage may need to be marked as executable before launch:
+
+```bash
+chmod +x _davPDF*.AppImage
+```
+
+Always download releases from the official `_davstudios` GitHub repository. When a SHA-256 hash is published, you can use it to verify the integrity of the downloaded file.
+
+## Package information
+
+- Developer / Publisher: `_davstudios`
+- Homepage: https://davstudios.it
+- License: MIT
+- Bundle identifier: `studio.dav.pdf`
+- Current version: `26.10.1`
 
 ## Local development
 
@@ -247,6 +303,10 @@ Build artifacts are created under `src-tauri/target/release/bundle/`.
 ## Technology
 
 _davPDF uses **Tauri 2** for the desktop application, **Rust + lopdf** for PDF manipulation, **PDFium** for rendering, **printpdf** for image-to-PDF creation, and **JavaScript + Vite** for the interface. Its visual language and motion system follow the same `_davstudios` identity as `_davRENAME`, `_davIMAGE`, and `_davDUPLICATE`.
+
+## Release notes
+
+v26.10.1 adopts the new `_davstudios` versioning and packaging standard without changing the PDF engine, PDFium rendering, interface or the application's functional logic. v1.0.0 remains the first stable `_davPDF` release.
 
 ## License
 

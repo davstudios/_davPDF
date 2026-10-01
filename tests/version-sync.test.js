@@ -11,6 +11,7 @@ const cargoVersion = cargoText.match(/^version\s*=\s*"([^"]+)"/m)?.[1];
 const mainSource = readFileSync(resolve(root, 'src/main.js'), 'utf8');
 
 test('release versions stay aligned', () => {
+  assert.equal(packageVersion, '26.10.1');
   assert.equal(tauriVersion, packageVersion);
   assert.equal(cargoVersion, packageVersion);
 });

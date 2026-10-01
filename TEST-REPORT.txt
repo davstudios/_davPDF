@@ -1,5 +1,57 @@
-_davPDF v1.0.2
-Tests: 12
-Passed: 12
-Failed: 0
-Notes: PDF engine helpers and zero-comment source audit validated. PDFium runtime integration is prepared by platform scripts and release workflow.
+_davPDF v26.10.1 — Test report
+Date: 2026-10-01
+
+Automated tests: 24/24 passed
+- PDF engine tests: passed
+- Development configuration tests: passed
+- Source comment audit: passed
+- Package metadata contract: passed
+- GitHub Release bilingual-description contract: passed
+- Version synchronization: passed
+- PDFium bundle contract: passed
+
+Static validation:
+- src/main.js: syntax valid
+- src/helpers.js: syntax valid
+- src/pdf-engine.js: syntax valid
+- scripts/dev-preflight.mjs: syntax valid
+- vite.config.js: syntax valid
+- package.json: valid JSON
+- package-lock.json: valid JSON
+- src-tauri/tauri.conf.json: valid JSON
+- src-tauri/capabilities/default.json: valid JSON
+- .github/workflows/release.yml: valid YAML
+
+Bundle metadata:
+- Version: 26.10.1
+- Public tag: v26.10.1
+- Publisher: _davstudios
+- Homepage: https://davstudios.it
+- License: MIT
+- Copyright: © 2026 _davstudios
+- Identifier preserved: studio.dav.pdf
+- Category: Productivity
+- Linux DEB section: utils
+- Linux DEB priority: optional
+
+Release workflow:
+- Windows x64 NSIS
+- macOS Universal DMG
+- Linux x64 AppImage and DEB
+- PDFium preparation preserved
+- GitHub Release body is read from the tagged commit Description
+- Both 🇮🇹 and 🇺🇸 sections are required
+- Linux apt workflow hardened against unavailable Microsoft repositories
+
+Functional comparison:
+- src/, Rust PDF backend, PDFium rendering code, Vite configuration and PDFium preparation scripts were compared against the supplied source package.
+- No functional differences were introduced by this metadata/release-standard update.
+
+Code signing:
+- No trusted commercial Windows code-signing certificate configured.
+- No Apple Developer ID/notarization configured.
+- README contains SmartScreen, Gatekeeper and AppImage guidance.
+
+Native build:
+- Cargo is not available in this execution environment, so the native Tauri/Rust bundle was not compiled here.
+- GitHub Actions remains responsible for native Windows, macOS and Linux release builds.

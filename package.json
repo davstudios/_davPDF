@@ -1,9 +1,9 @@
 {
   "name": "davpdf-app",
-  "version": "1.0.2",
+  "version": "26.10.1",
   "private": true,
   "type": "module",
-  "description": "_davPDF — local PDF toolbox for Windows, macOS and Linux.",
+  "description": "_davPDF — local PDF toolbox for Windows, macOS and Linux by _davstudios.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -22,5 +22,8 @@
   "devDependencies": {
     "@tauri-apps/cli": "2.11.4",
     "vite": "8.2.2"
-  }
+  },
+  "author": "_davstudios",
+  "license": "MIT",
+  "homepage": "https://davstudios.it"
 }

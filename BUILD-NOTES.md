@@ -1,4 +1,4 @@
-# _davPDF v1.0.2 build notes
+# _davPDF v26.10.1 build notes
 
 ## Requirements
 
@@ -25,3 +25,16 @@ On Ubuntu/Debian first run `./INSTALL-LINUX-DEPS-UBUNTU.sh`, then `./RUN-LINUX.s
 ## Development launcher reliability
 
 The development server uses the dedicated local port `17333`. Before `tauri dev` starts, `_davPDF` checks for stale development processes from the same project on Windows and cleans them up. Processes belonging to other applications are never terminated automatically.
+
+
+## Release metadata
+
+This release adopts the `_davstudios` package metadata standard: MIT license, publisher, homepage, copyright, package descriptions and Linux DEB metadata are declared in the application bundle configuration.
+
+## GitHub Release description
+
+The release workflow reads the bilingual Description/body from the commit referenced by the release tag. Both `🇮🇹` and `🇺🇸` sections are required before publication.
+
+## Unsigned distribution
+
+Windows and macOS packages are currently distributed without a trusted commercial Windows code-signing certificate or Apple Developer ID/notarization. The README documents the expected SmartScreen and Gatekeeper flows.
