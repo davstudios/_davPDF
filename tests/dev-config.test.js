@@ -25,3 +25,4 @@ test('pdfium page indices use the current signed index type', () => {
   assert.doesNotMatch(render, /pages\(\)\.get\([^\n]*as u16/);
   assert.match(render, /pages\(\)\.get\(\(page_number - 1\) as i32\)/);
 });
+

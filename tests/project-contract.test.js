@@ -46,3 +46,18 @@ test('set icone Tauri completo', () => {
     assert.equal(fs.existsSync(`src-tauri/icons/${file}`), true, `${file} mancante`);
   }
 });
+
+
+test('release workflow usa percorsi repository espliciti e stabili', () => {
+  const workflow = fs.readFileSync('.github/workflows/release.yml', 'utf8');
+  const windowsPrepare = fs.readFileSync('PREPARE-PDFIUM-WINDOWS.ps1', 'utf8');
+  const unixPrepare = fs.readFileSync('PREPARE-PDFIUM-UNIX.sh', 'utf8');
+  assert.match(workflow, /Validate repository paths/);
+  assert.match(workflow, /GITHUB_WORKSPACE/);
+  assert.match(workflow, /projectPath:\s*\./);
+  assert.match(windowsPrepare, /\$PSScriptRoot/);
+  assert.match(windowsPrepare, /Get-ChildItem[^\n]*-Recurse/);
+  assert.match(unixPrepare, /BASH_SOURCE\[0\]/);
+  assert.match(unixPrepare, /find "\$WORK" -type f -name/);
+});
+

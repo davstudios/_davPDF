@@ -62,3 +62,4 @@ test('source files contain no code comments', () => {
   const findings = paths.filter(hasComment).map((path) => path.slice(root.length + 1));
   assert.deepEqual(findings, []);
 });
+

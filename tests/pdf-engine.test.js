@@ -50,3 +50,4 @@ test('maps compression presets', () => {
   assert.equal(estimatedCompressionLevel('balanced'), 7);
   assert.equal(estimatedCompressionLevel('maximum'), 9);
 });
+

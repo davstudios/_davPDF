@@ -1,4 +1,4 @@
-# _davPDF v26.10.1 build notes
+# _davPDF v26.10.2 build notes
 
 ## Requirements
 
@@ -38,3 +38,8 @@ The release workflow reads the bilingual Description/body from the commit refere
 ## Unsigned distribution
 
 Windows and macOS packages are currently distributed without a trusted commercial Windows code-signing certificate or Apple Developer ID/notarization. The README documents the expected SmartScreen and Gatekeeper flows.
+
+## Path-safe release preparation
+
+Release scripts resolve the repository root from their own location instead of relying on the caller working directory. PDFium archive extraction searches for the expected runtime library recursively before copying it into `src-tauri/resources/pdfium/`. GitHub Actions validates required project paths before starting the native build.
+

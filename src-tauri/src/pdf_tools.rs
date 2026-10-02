@@ -362,3 +362,4 @@ pub fn unlock_pdf(path: String, output_path: String, password: String) -> Result
     document.encryption_state = None;
     save_document(document, Path::new(&output_path), false)
 }
+

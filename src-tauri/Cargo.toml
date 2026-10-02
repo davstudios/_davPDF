@@ -1,6 +1,6 @@
 [package]
 name = "davpdf"
-version = "26.10.1"
+version = "26.10.2"
 description = "_davPDF — local PDF toolbox for Windows, macOS and Linux by _davstudios."
 authors = ["_davstudios"]
 license = "MIT"
@@ -27,3 +27,4 @@ pdfium-render = "0.9.4"
 image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
 printpdf = { version = "0.12.8", default-features = false, features = ["jpeg", "png", "webp", "bmp", "tiff"] }
 base64 = "0.22"
+

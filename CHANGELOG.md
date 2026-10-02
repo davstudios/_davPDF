@@ -1,5 +1,16 @@
 # Changelog
 
+## 26.10.2
+
+- Corretta e resa esplicita la gestione dei percorsi del repository nel workflow GitHub Actions e negli script di preparazione PDFium.
+- Gli script PDFium risolvono ora la root del progetto in modo indipendente dalla cartella di avvio e individuano la libreria estratta senza dipendere da una struttura fissa dell'archivio.
+- Aggiunta una verifica preventiva dei percorsi richiesti prima della build e impostato esplicitamente `projectPath: .` per Tauri Action.
+- Sincronizzata la versione `26.10.2` in package.json, package-lock.json, Cargo.toml, Cargo.lock, configurazione Tauri, documentazione e test.
+- Esteso il controllo di sincronizzazione anche a package-lock.json e Cargo.lock.
+- Reso il parser di Cargo.lock compatibile con checkout Windows CRLF e aggiunto un test di regressione dedicato.
+- Eseguita la repository normalization dei file testuali con regole EOL esplicite, mantenendo invariati i contenuti funzionali.
+- Preservati integralmente motore PDF, rendering PDFium, merge, split, compressione, gestione pagine, protezione, conversione e interfaccia.
+
 ## 26.10.1
 
 - Adottato il nuovo standard di versioning `_davstudios` `YY.M.REVISIONE`.
@@ -38,3 +49,4 @@ First stable release of `_davPDF`.
 - Buy Me A Coffee and davstudios.it buttons.
 - Windows, macOS, and Linux release workflow.
 - Source comment audit test.
+

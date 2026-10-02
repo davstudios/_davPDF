@@ -79,3 +79,4 @@ export function normalizedRotation(value) {
 export function estimatedCompressionLevel(preset) {
   return ({ lossless: 4, high: 5, balanced: 7, maximum: 9 })[preset] ?? 7;
 }
+

@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing tag to build, for example v26.10.1'
+        description: 'Existing tag to build, for example v26.10.2'
         required: true
         type: string
 
@@ -30,6 +30,17 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Validate repository paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          test -f package.json
+          test -f src-tauri/tauri.conf.json
+          test -f src-tauri/Cargo.toml
+          test -f PREPARE-PDFIUM-WINDOWS.ps1
+          test -f PREPARE-PDFIUM-UNIX.sh
 
       - name: Install Linux dependencies
         if: matrix.platform == 'ubuntu-22.04'
@@ -110,19 +121,21 @@ jobs:
       - name: Prepare PDFium on Windows
         if: matrix.platform == 'windows-latest'
         shell: pwsh
-        run: ./PREPARE-PDFIUM-WINDOWS.ps1
+        run: |
+          Set-Location -LiteralPath $env:GITHUB_WORKSPACE
+          & (Join-Path $env:GITHUB_WORKSPACE 'PREPARE-PDFIUM-WINDOWS.ps1')
 
       - name: Prepare PDFium on macOS and Linux
         if: matrix.platform != 'windows-latest'
         shell: bash
         run: |
-          tr -d '\r' < PREPARE-PDFIUM-UNIX.sh > PREPARE-PDFIUM-UNIX.tmp
-          mv PREPARE-PDFIUM-UNIX.tmp PREPARE-PDFIUM-UNIX.sh
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
           chmod +x PREPARE-PDFIUM-UNIX.sh
-          bash ./PREPARE-PDFIUM-UNIX.sh
+          bash "$GITHUB_WORKSPACE/PREPARE-PDFIUM-UNIX.sh"
 
       - name: Install frontend dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm test
@@ -137,4 +150,6 @@ jobs:
           releaseBody: ${{ steps.release_description.outputs.body }}
           releaseDraft: false
           prerelease: false
+          projectPath: .
           args: ${{ matrix.args }}
+

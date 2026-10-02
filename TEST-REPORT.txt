@@ -1,14 +1,20 @@
-_davPDF v26.10.1 — Test report
-Date: 2026-10-01
+_davPDF v26.10.2 — Test report
+Date: 2026-10-02
 
-Automated tests: 24/24 passed
+Automated tests: 26/26 passed
 - PDF engine tests: passed
 - Development configuration tests: passed
 - Source comment audit: passed
 - Package metadata contract: passed
 - GitHub Release bilingual-description contract: passed
-- Version synchronization: passed
+- Repository path-safety contract: passed
+- Version synchronization across package.json, package-lock.json, Tauri, Cargo.toml and Cargo.lock: passed
+- Windows CRLF Cargo.lock regression test: passed
 - PDFium bundle contract: passed
+
+Windows checkout simulation:
+- Cargo.lock converted physically to CRLF in a temporary project copy.
+- Full npm test suite: 26/26 passed.
 
 Static validation:
 - src/main.js: syntax valid
@@ -20,11 +26,13 @@ Static validation:
 - package-lock.json: valid JSON
 - src-tauri/tauri.conf.json: valid JSON
 - src-tauri/capabilities/default.json: valid JSON
+- generated Tauri schema JSON files: valid JSON
 - .github/workflows/release.yml: valid YAML
+- shell scripts: bash syntax valid
 
 Bundle metadata:
-- Version: 26.10.1
-- Public tag: v26.10.1
+- Version: 26.10.2
+- Public tag: v26.10.2
 - Publisher: _davstudios
 - Homepage: https://davstudios.it
 - License: MIT
@@ -38,20 +46,30 @@ Release workflow:
 - Windows x64 NSIS
 - macOS Universal DMG
 - Linux x64 AppImage and DEB
-- PDFium preparation preserved
+- Repository paths are validated before native build
+- Tauri Action projectPath is explicitly set to repository root
+- PDFium preparation resolves the project root from the script location
+- PDFium extracted libraries are located recursively instead of relying on a fixed archive subpath
 - GitHub Release body is read from the tagged commit Description
 - Both 🇮🇹 and 🇺🇸 sections are required
 - Linux apt workflow hardened against unavailable Microsoft repositories
 
+Repository normalization:
+- Text files were normalized and intentionally touched with semantically neutral EOF/EOL changes so legacy GitHub rows can point to the current release commit.
+- .gitattributes now defines deterministic text/binary and platform EOL handling.
+- Existing PNG, ICO and ICNS icons remain visually and byte-for-byte unchanged; src-tauri/icons/ASSET-METADATA.md records their verification for this release.
+
 Functional comparison:
-- src/, Rust PDF backend, PDFium rendering code, Vite configuration and PDFium preparation scripts were compared against the supplied source package.
-- No functional differences were introduced by this metadata/release-standard update.
+- PDF engine sources, Rust PDF backend, PDFium rendering code, Vite configuration and interface logic were not functionally changed.
+- Build/release infrastructure changed only to harden path resolution and release reliability.
 
 Code signing:
 - No trusted commercial Windows code-signing certificate configured.
 - No Apple Developer ID/notarization configured.
 - README contains SmartScreen, Gatekeeper and AppImage guidance.
 
-Native build:
-- Cargo is not available in this execution environment, so the native Tauri/Rust bundle was not compiled here.
+Build validation:
+- Native Cargo/Tauri compilation is unavailable in this execution environment because Rust/Cargo is not installed.
+- Frontend dependency installation was attempted but timed out in the execution environment, so the Vite production build was not re-run here.
 - GitHub Actions remains responsible for native Windows, macOS and Linux release builds.
+

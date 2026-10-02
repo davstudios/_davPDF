@@ -14,3 +14,4 @@ pub fn run_action(action: String, paths: Vec<String>, _options: ActionOptions) -
     }
     result(true,"PDF inspection completed","Local PDF structure inspected",lines.join("\n"))
 }
+
