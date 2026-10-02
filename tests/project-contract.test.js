@@ -35,10 +35,25 @@ test('identifier storico resta invariato', () => {
   assert.equal(tauri.identifier, 'studio.dav.pdf');
 });
 
-test('runtime PDFium continua a essere incluso nel bundle', () => {
+test('runtime PDFium continua a essere preparato e incluso nel bundle su ogni piattaforma', () => {
   const tauri = JSON.parse(fs.readFileSync('src-tauri/tauri.conf.json', 'utf8'));
+  const workflow = fs.readFileSync('.github/workflows/release.yml', 'utf8');
+  const windowsPrepare = fs.readFileSync('PREPARE-PDFIUM-WINDOWS.ps1', 'utf8');
+  const unixPrepare = fs.readFileSync('PREPARE-PDFIUM-UNIX.sh', 'utf8');
+  const gitignore = fs.readFileSync('.gitignore', 'utf8');
+
   assert.equal(tauri.bundle.resources['resources/pdfium/'], 'pdfium/');
-  assert.equal(fs.existsSync('src-tauri/resources/pdfium/pdfium.dll'), true);
+  assert.equal(fs.existsSync('src-tauri/resources/pdfium/.gitkeep'), true);
+  assert.match(windowsPrepare, /pdfium\.dll/);
+  assert.match(unixPrepare, /libpdfium\.dylib/);
+  assert.match(unixPrepare, /libpdfium\.so/);
+  assert.match(workflow, /Verify prepared PDFium runtime/);
+  assert.match(workflow, /pdfium\.dll/);
+  assert.match(workflow, /libpdfium\.dylib/);
+  assert.match(workflow, /libpdfium\.so/);
+  assert.match(gitignore, /src-tauri\/resources\/pdfium\/\*\.dll/);
+  assert.match(gitignore, /src-tauri\/resources\/pdfium\/\*\.so/);
+  assert.match(gitignore, /src-tauri\/resources\/pdfium\/\*\.dylib/);
 });
 
 test('set icone Tauri completo', () => {

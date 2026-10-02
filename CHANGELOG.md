@@ -1,5 +1,13 @@
 # Changelog
 
+## 26.10.3
+
+- Corretto il contratto di test del runtime PDFium: i test non richiedono più una DLL Windows generata prima della fase di preparazione multipiattaforma.
+- Il workflow verifica ora esplicitamente, dopo la preparazione PDFium, la presenza del runtime corretto per ciascun runner: `pdfium.dll` su Windows, `libpdfium.dylib` su macOS e `libpdfium.so` su Linux.
+- Rafforzata la verifica di sincronizzazione della release includendo package-lock.json e Cargo.lock con parser compatibile LF/CRLF.
+- Sincronizzata la versione `26.10.3` in package.json, package-lock.json, Cargo.toml, Cargo.lock, configurazione Tauri, documentazione e test.
+- Preservati integralmente motore PDF, rendering PDFium, merge, split, compressione, gestione pagine, protezione, conversione e interfaccia.
+
 ## 26.10.2
 
 - Corretta e resa esplicita la gestione dei percorsi del repository nel workflow GitHub Actions e negli script di preparazione PDFium.

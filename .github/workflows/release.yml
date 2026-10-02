@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Existing tag to build, for example v26.10.2'
+        description: 'Existing tag to build, for example v26.10.3'
         required: true
         type: string
 
@@ -71,11 +71,18 @@ jobs:
           import fs from 'node:fs';
           const tag = process.env.RELEASE_TAG;
           const expected = tag.replace(/^v/, '');
-          const packageVersion = JSON.parse(fs.readFileSync('package.json', 'utf8')).version;
-          const tauriVersion = JSON.parse(fs.readFileSync('src-tauri/tauri.conf.json', 'utf8')).version;
+          const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const packageLock = JSON.parse(fs.readFileSync('package-lock.json', 'utf8'));
+          const tauri = JSON.parse(fs.readFileSync('src-tauri/tauri.conf.json', 'utf8'));
           const cargoText = fs.readFileSync('src-tauri/Cargo.toml', 'utf8');
+          const cargoLockText = fs.readFileSync('src-tauri/Cargo.lock', 'utf8');
+          const packageVersion = packageJson.version;
+          const packageLockVersion = packageLock.version;
+          const packageLockRootVersion = packageLock.packages?.['']?.version;
+          const tauriVersion = tauri.version;
           const cargoVersion = cargoText.match(/^version\s*=\s*"([^"]+)"/m)?.[1];
-          const versions = { packageVersion, tauriVersion, cargoVersion };
+          const cargoLockVersion = cargoLockText.match(/\[\[package\]\]\r?\nname = "davpdf"\r?\nversion = "([^"]+)"/)?.[1];
+          const versions = { packageVersion, packageLockVersion, packageLockRootVersion, tauriVersion, cargoVersion, cargoLockVersion };
           const mismatches = Object.entries(versions).filter(([, value]) => value !== expected);
           if (mismatches.length) {
             console.error(`Release tag ${tag} expects app version ${expected}.`);
@@ -133,6 +140,18 @@ jobs:
           cd "$GITHUB_WORKSPACE"
           chmod +x PREPARE-PDFIUM-UNIX.sh
           bash "$GITHUB_WORKSPACE/PREPARE-PDFIUM-UNIX.sh"
+
+      - name: Verify prepared PDFium runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$GITHUB_WORKSPACE"
+          case "${{ runner.os }}" in
+            Windows) test -f src-tauri/resources/pdfium/pdfium.dll ;;
+            macOS) test -f src-tauri/resources/pdfium/libpdfium.dylib ;;
+            Linux) test -f src-tauri/resources/pdfium/libpdfium.so ;;
+            *) echo "Unsupported runner OS: ${{ runner.os }}" >&2; exit 1 ;;
+          esac
 
       - name: Install frontend dependencies
         run: npm ci

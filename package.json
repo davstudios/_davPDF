@@ -1,6 +1,6 @@
 {
   "name": "davpdf-app",
-  "version": "26.10.2",
+  "version": "26.10.3",
   "private": true,
   "type": "module",
   "description": "_davPDF — local PDF toolbox for Windows, macOS and Linux by _davstudios.",
@@ -27,4 +27,3 @@
   "license": "MIT",
   "homepage": "https://davstudios.it"
 }
-

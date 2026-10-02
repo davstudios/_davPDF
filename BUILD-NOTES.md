@@ -1,4 +1,4 @@
-# _davPDF v26.10.2 build notes
+# _davPDF v26.10.3 build notes
 
 ## Requirements
 
@@ -41,5 +41,5 @@ Windows and macOS packages are currently distributed without a trusted commercia
 
 ## Path-safe release preparation
 
-Release scripts resolve the repository root from their own location instead of relying on the caller working directory. PDFium archive extraction searches for the expected runtime library recursively before copying it into `src-tauri/resources/pdfium/`. GitHub Actions validates required project paths before starting the native build.
+Release scripts resolve the repository root from their own location instead of relying on the caller working directory. PDFium archive extraction searches for the expected runtime library recursively before copying it into `src-tauri/resources/pdfium/`. GitHub Actions validates required project paths before starting the native build and verifies the platform-specific PDFium runtime immediately after preparation: `pdfium.dll` on Windows, `libpdfium.dylib` on macOS and `libpdfium.so` on Linux.
 

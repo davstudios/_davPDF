@@ -1,4 +1,4 @@
-_davPDF v26.10.2 — Test report
+_davPDF v26.10.3 — Test report
 Date: 2026-10-02
 
 Automated tests: 26/26 passed
@@ -10,11 +10,15 @@ Automated tests: 26/26 passed
 - Repository path-safety contract: passed
 - Version synchronization across package.json, package-lock.json, Tauri, Cargo.toml and Cargo.lock: passed
 - Windows CRLF Cargo.lock regression test: passed
-- PDFium bundle contract: passed
+- PDFium multiplatform preparation and bundle contract: passed
 
-Windows checkout simulation:
-- Cargo.lock converted physically to CRLF in a temporary project copy.
-- Full npm test suite: 26/26 passed.
+Clean-checkout simulation:
+- Generated PDFium runtime binaries were temporarily removed from src-tauri/resources/pdfium/.
+- Full npm test suite: 26/26 passed without relying on a pre-generated platform binary.
+
+Windows checkout regression:
+- Cargo.lock parser explicitly supports CRLF line endings.
+- Dedicated CRLF regression test: passed.
 
 Static validation:
 - src/main.js: syntax valid
@@ -31,8 +35,8 @@ Static validation:
 - shell scripts: bash syntax valid
 
 Bundle metadata:
-- Version: 26.10.2
-- Public tag: v26.10.2
+- Version: 26.10.3
+- Public tag: v26.10.3
 - Publisher: _davstudios
 - Homepage: https://davstudios.it
 - License: MIT
@@ -50,6 +54,7 @@ Release workflow:
 - Tauri Action projectPath is explicitly set to repository root
 - PDFium preparation resolves the project root from the script location
 - PDFium extracted libraries are located recursively instead of relying on a fixed archive subpath
+- After preparation, the workflow verifies the platform-specific runtime before npm test and Tauri build
 - GitHub Release body is read from the tagged commit Description
 - Both 🇮🇹 and 🇺🇸 sections are required
 - Linux apt workflow hardened against unavailable Microsoft repositories
@@ -61,7 +66,7 @@ Repository normalization:
 
 Functional comparison:
 - PDF engine sources, Rust PDF backend, PDFium rendering code, Vite configuration and interface logic were not functionally changed.
-- Build/release infrastructure changed only to harden path resolution and release reliability.
+- Build/release infrastructure changed only to harden path resolution, platform-specific PDFium validation and release reliability.
 
 Code signing:
 - No trusted commercial Windows code-signing certificate configured.
@@ -70,6 +75,6 @@ Code signing:
 
 Build validation:
 - Native Cargo/Tauri compilation is unavailable in this execution environment because Rust/Cargo is not installed.
-- Frontend dependency installation was attempted but timed out in the execution environment, so the Vite production build was not re-run here.
+- Vite is not installed in the isolated verification environment, so the frontend production build could not be re-run locally; GitHub Actions installs dependencies with `npm ci` before the native build.
 - GitHub Actions remains responsible for native Windows, macOS and Linux release builds.
 

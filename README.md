@@ -119,7 +119,7 @@ Scarica sempre le release dalla repository GitHub ufficiale di `_davstudios`. Qu
 - Homepage: https://davstudios.it
 - Licenza: MIT
 - Bundle identifier: `studio.dav.pdf`
-- Versione corrente: `26.10.2`
+- Versione corrente: `26.10.3`
 
 ## Sviluppo locale
 
@@ -152,7 +152,7 @@ _davPDF usa **Tauri 2** per l'app desktop, **Rust + lopdf** per la manipolazione
 
 ## Note della release
 
-La v26.10.2 mantiene il nuovo standard di versioning e packaging `_davstudios`, corregge la gestione dei percorsi nella pipeline di release e rende i controlli di versione robusti anche sui checkout Windows CRLF, senza modificare il motore PDF, il rendering PDFium, l'interfaccia o la logica funzionale dell'app. La v1.0.0 rimane la prima release stabile di `_davPDF`.
+La v26.10.3 corregge il contratto di verifica del runtime PDFium nella pipeline multipiattaforma: i test non richiedono più una DLL Windows generata nel repository, mentre GitHub Actions controlla dopo la preparazione la libreria corretta per Windows, macOS o Linux. Restano attivi i controlli di percorso e sincronizzazione versione compatibili con checkout Windows CRLF, senza modifiche al motore PDF, al rendering PDFium, all'interfaccia o alla logica funzionale dell'app. La v1.0.0 rimane la prima release stabile di `_davPDF`.
 
 ## Licenza
 
@@ -275,7 +275,7 @@ Always download releases from the official `_davstudios` GitHub repository. When
 - Homepage: https://davstudios.it
 - License: MIT
 - Bundle identifier: `studio.dav.pdf`
-- Current version: `26.10.2`
+- Current version: `26.10.3`
 
 ## Local development
 
@@ -306,7 +306,7 @@ _davPDF uses **Tauri 2** for the desktop application, **Rust + lopdf** for PDF m
 
 ## Release notes
 
-v26.10.2 retains the new `_davstudios` versioning and packaging standard, fixes release-pipeline path handling and makes version checks robust on Windows CRLF checkouts without changing the PDF engine, PDFium rendering, interface or the application's functional logic. v1.0.0 remains the first stable `_davPDF` release.
+v26.10.3 fixes the PDFium runtime verification contract in the multiplatform release pipeline: tests no longer require a generated Windows DLL to be stored in the repository, while GitHub Actions verifies the correct prepared library for Windows, macOS or Linux. Path validation and CRLF-safe version synchronization checks remain enabled, with no changes to the PDF engine, PDFium rendering, interface or the application's functional logic. v1.0.0 remains the first stable `_davPDF` release.
 
 ## License
 
