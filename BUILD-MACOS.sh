@@ -14,3 +14,4 @@ npm run bundle
 echo
 echo "Build completata. Controlla: src-tauri/target/release/bundle/"
 
+

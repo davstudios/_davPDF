@@ -21,7 +21,7 @@ const cargoVersion = cargoText.match(/^version\s*=\s*"([^"]+)"/m)?.[1];
 const cargoLockVersion = cargoLockAppVersion(cargoLockText);
 
 test('release versions stay aligned', () => {
-  assert.equal(packageVersion, '26.10.3');
+  assert.equal(packageVersion, '26.10.4');
   assert.equal(packageLock.version, packageVersion);
   assert.equal(packageLock.packages[''].version, packageVersion);
   assert.equal(tauriVersion, packageVersion);

@@ -293,3 +293,4 @@ pub fn images_to_pdf(paths: Vec<String>, output_path: String, options: ImagesToP
     Ok(destination.to_string_lossy().into_owned())
 }
 
+

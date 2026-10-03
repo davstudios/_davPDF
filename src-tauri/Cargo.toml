@@ -1,6 +1,6 @@
 [package]
 name = "davpdf"
-version = "26.10.3"
+version = "26.10.4"
 description = "_davPDF — local PDF toolbox for Windows, macOS and Linux by _davstudios."
 authors = ["_davstudios"]
 license = "MIT"

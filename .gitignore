@@ -8,3 +8,4 @@ src-tauri/resources/pdfium/*.dll
 src-tauri/resources/pdfium/*.so
 src-tauri/resources/pdfium/*.dylib
 
+

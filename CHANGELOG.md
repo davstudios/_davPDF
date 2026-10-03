@@ -1,5 +1,14 @@
 # Changelog
 
+## 26.10.4
+
+- Eseguita una nuova repository normalization completa per riallineare tutti i file tracciabili e le cartelle del progetto al commit della release corrente.
+- Aggiornata la versione a `26.10.4` in package.json, package-lock.json, Cargo.toml, Cargo.lock, configurazione Tauri, documentazione e test.
+- Mantenuta la correzione multipiattaforma del runtime PDFium e il parser Cargo.lock compatibile LF/CRLF.
+- Rimosso dal pacchetto sorgente il `pdfium.dll` generato: il runtime resta escluso da Git e viene preparato automaticamente dagli script/workflow per la piattaforma corrente.
+- Ricodificati in modo lossless gli asset icona tracciati per registrarli nella release corrente senza modificarne l'aspetto.
+- Nessuna modifica funzionale al motore PDF, al rendering PDFium, all'interfaccia o agli strumenti PDF.
+
 ## 26.10.3
 
 - Corretto il contratto di test del runtime PDFium: i test non richiedono più una DLL Windows generata prima della fase di preparazione multipiattaforma.

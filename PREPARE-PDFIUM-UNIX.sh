@@ -33,3 +33,4 @@ cp "$SOURCE" "$TARGET"
 [[ -f "$TARGET" ]] || { echo "PDFium non copiato nel percorso atteso: $TARGET" >&2; exit 1; }
 echo "PDFium pronto: $TARGET"
 
+

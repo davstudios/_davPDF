@@ -363,3 +363,4 @@ pub fn unlock_pdf(path: String, output_path: String, password: String) -> Result
     save_document(document, Path::new(&output_path), false)
 }
 
+
